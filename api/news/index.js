@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
       search ? search + " football" : "manchester united"
     }&from=${moment()
       .subtract(1, "month")
-      .format("YYYY-MM-DD")}&sortBy=publishedAt&apiKey=${
+      .format("YYYY-MM-DD")}&sortBy=publishedAt&language=en&apiKey=${
       process.env.NEWS_API_KEY
     }`;
     const news = await News.find({});
