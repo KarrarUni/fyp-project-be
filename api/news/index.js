@@ -10,19 +10,22 @@ const News = require("./news.model");
 router.get("/", async (req, res) => {
   try {
     let search = req.url.split("?")[1] || "";
-    const defaultSearch = `q=${
-      search ? search + " football" : "manchester united"
-    }&from=${moment()
-      .subtract(1, "month")
-      .format("YYYY-MM-DD")}&sortBy=publishedAt&language=en&apiKey=${
-      process.env.NEWS_API_KEY
-    }`;
-    const news = await News.find({});
-    const response = await axios.get(`${baseURL}?${defaultSearch}`);
+    // const defaultSearch = `q=${
+    //   search ? search + " football" : "manchester united"
+    // }&from=${moment()
+    //   .subtract(1, "month")
+    //   .format("YYYY-MM-DD")}&sortBy=publishedAt&language=en&apiKey=${
+    //   process.env.NEWS_API_KEY
+    // }`;
+    const query = {
+      title: { $regex: search, $options: 'i' } 
+    };
+    const news = await News.find(query);
+    // const response = await axios.get(`${baseURL}?${defaultSearch}`);
     if (response.data.status === "ok") {
       response.data.articles = [
         ...news,
-        ...response.data.articles.slice(0, 15),
+        // ...response.data.articles.slice(0, 15),
       ];
       res.status(200).json(response.data);
     } else {
