@@ -1,5 +1,5 @@
 /**
- * Created by: Shuaib
+ * Karrar Almayali
  */
 
 const express = require("express");
@@ -9,8 +9,6 @@ const app = express();
 // middleware to parse the body of the request
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-// @TODO: Change the origin to the frontend URL
 app.use(cors({ origin: "*" }));
 
 // Connects to the Mongo DB
